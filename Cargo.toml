@@ -1,0 +1,27 @@
+[package]
+name = "tonic-include-proto"
+version = "0.1.0"
+authors = ["Trisfald <trisfald@gmail.com>"]
+description = "Macro to include protobuf built with tonic"
+documentation = "https://docs.rs/tonic-include-proto"
+repository = "https://github.com/trisfald/tonic_include_proto"
+keywords = ["protobuf", "macro"]
+categories = ["web-programming"]
+readme = "README.md"
+edition = "2021"
+license = "MIT"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+quote = "1"
+syn = { version = "1.0", features = ["full"] }
+proc-macro2 = "1"
+
+[build-dependencies]
+tonic-build = { version = "0.6" }
+
+[dev-dependencies]
+tonic = { version = "0.6" }
+prost = "0.9"
