@@ -10,11 +10,12 @@ and each of them are placed in the correct namespace.
 ### Example
 
 The code:
-```
+```rust
 tonic_include_proto::namespaced!("x.y", "x.z");
 ```
-is equivalent to
-```
+
+is equivalent to:
+```rust
 mod x {
     mod y {
         tonic::include_proto!("x.y");
