@@ -12,6 +12,16 @@ use quote::{format_ident, quote};
 #[derive(Default, Debug)]
 struct Namespace {
     children: HashMap<String, Namespace>,
+    generate: bool,
+}
+
+impl Namespace {
+    fn new(generate: bool) -> Self {
+        Self {
+            children: HashMap::new(),
+            generate,
+        }
+    }
 }
 
 /// This macro invokes the macro `tonic::include_proto` for multiple protobuf packages
@@ -62,8 +72,10 @@ pub fn namespaced(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let mut namespaces_map: HashMap<String, Namespace> = HashMap::new();
     for package in packages {
         let mut map = &mut namespaces_map;
-        for import in package {
-            let entry = map.entry(import.to_string()).or_default();
+        for (i, import) in package.iter().enumerate() {
+            let entry = map
+                .entry(import.to_string())
+                .or_insert(Namespace::new(i == package.len() - 1));
             map = &mut entry.children;
         }
     }
@@ -89,8 +101,8 @@ fn build_namespace_tokens(path: String, name: &str, namespace: &Namespace) -> To
         .collect();
     // Format the namespace name.
     let formatted_name = format_ident!("{}", name);
-    // In the leaves invoke the tonic macro to include the protobuf.
-    let include_token = if namespace.children.is_empty() {
+    // When generate=true invoke the tonic macro to include the protobuf.
+    let include_token = if namespace.generate {
         quote! {
             tonic::include_proto!(#path);
         }

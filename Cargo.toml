@@ -1,6 +1,6 @@
 [package]
 name = "tonic-include-proto"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Trisfald <trisfald@gmail.com>"]
 description = "Macro to include protobuf built with tonic"
 documentation = "https://docs.rs/tonic-include-proto"
