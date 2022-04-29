@@ -75,7 +75,7 @@ pub fn namespaced(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         for (i, import) in package.iter().enumerate() {
             let entry = map
                 .entry(import.to_string())
-                .or_insert(Namespace::new(i == package.len() - 1));
+                .or_insert_with(|| Namespace::new(i == package.len() - 1));
             map = &mut entry.children;
         }
     }
