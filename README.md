@@ -11,12 +11,13 @@ and each of them are placed in the correct namespace.
 
 The code:
 ```rust
-tonic_include_proto::namespaced!("x.y", "x.z");
+tonic_include_proto::namespaced!("x", "x.y", "x.z");
 ```
 
 is equivalent to:
 ```rust
 mod x {
+    tonic::include_proto!("x");
     mod y {
         tonic::include_proto!("x.y");
     }
