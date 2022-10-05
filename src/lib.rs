@@ -32,13 +32,14 @@ impl Namespace {
 /// The code:
 ///
 /// ```
-/// tonic_include_proto::namespaced!("x.y", "x.z");
+/// tonic_include_proto::namespaced!("x", "x.y", "x.z");
 /// ```
 ///
 /// is equivalent to
 ///
 /// ```
 /// mod x {
+///     tonic::include_proto!("x");
 ///     mod y {
 ///         tonic::include_proto!("x.y");
 ///     }
